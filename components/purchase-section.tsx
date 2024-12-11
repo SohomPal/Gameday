@@ -23,7 +23,7 @@ export function PurchaseSection({ price, purchaseUrl, accentColor }: PurchaseSec
         </h2>
         <Button
           size="lg"
-          className={`bg-${accentColor}-500 text-white hover:bg-${accentColor}-600 text-lg px-8 py-6`}
+          className={`bg-white-500 bg-opacity-75 text-white text-xl px-10 py-8 rounded-full shadow-lg transform transition duration-300 hover:scale-105`}
           onClick={() => window.location.href = purchaseUrl}
         >
           Purchase Game

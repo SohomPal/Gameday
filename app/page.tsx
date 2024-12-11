@@ -11,11 +11,12 @@ export default async function Home() {
 
   return (
     <main className="bg-black min-h-screen">
-      <NavBar />
+      <NavBar themeColor={game.accentColor} />
       <HeroSection
         videoUrl={game.trailerUrl}
         title={game.title}
         heroImage={game.heroImage}
+        themeColor={game.accentColor}
       />
       <FeaturesSection features={game.features} />
       <ExpandingSection imageUrl={game.expandingImage} />

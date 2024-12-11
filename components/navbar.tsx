@@ -3,9 +3,15 @@
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
-export function NavBar() {
+interface NavBarProps {
+  themeColor: string
+}
+
+export function NavBar({ themeColor }: NavBarProps) {
   const [isScrolled, setIsScrolled] = useState(false)
+  const router = useRouter()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,11 +22,16 @@ export function NavBar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const scrollToBottom = () => {
-    window.scroll({
-      top: document.documentElement.scrollHeight,
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
       behavior: 'smooth'
     })
+  }
+
+  const handleGameDayClick = () => {
+    router.push('/')
+    scrollToTop()
   }
 
   return (
@@ -29,19 +40,22 @@ export function NavBar() {
     }`}>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          <div className="text-3xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+          <button
+            onClick={handleGameDayClick}
+            className={`text-3xl font-extrabold text-${themeColor}-500`}
+          >
             GameDay
-          </div>
+          </button>
           <div className="flex items-center space-x-4">
             <Button 
-              onClick={scrollToBottom}
+              onClick={() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' })}
               variant="outline"
               className="bg-white/10 text-white border-white/20 hover:bg-white/20"
             >
               Buy Now
             </Button>
             <Link href="/about">
-              <Button variant="ghost" className="text-white hover:bg-white/10">
+              <Button variant="outline" className="bg-white/10 text-white border-white/20 hover:bg-white/20">
                 About Us
               </Button>
             </Link>

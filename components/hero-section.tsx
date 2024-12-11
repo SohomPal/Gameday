@@ -6,30 +6,37 @@ interface HeroSectionProps {
   videoUrl: string
   title: string
   heroImage: string
+  themeColor: string
 }
 
-export function HeroSection({ videoUrl, title, heroImage }: HeroSectionProps) {
+export function HeroSection({ videoUrl, title, heroImage, themeColor }: HeroSectionProps) {
   const [isMuted, setIsMuted] = useState(true)
+  const [isTitleVisible, setIsTitleVisible] = useState(true)
   const videoRef = useRef<HTMLVideoElement>(null)
 
-  const unmute = () => {
-    if (videoRef.current && isMuted) {
-      videoRef.current.muted = false
-      setIsMuted(false)
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted
+      setIsMuted(!isMuted)
+      setIsTitleVisible(false)
     }
   }
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.currentTime = 10; // Start 10 seconds in
-      videoRef.current.play().catch(error => {
-        console.error("Error attempting to play video:", error);
-      });
+    const handleScroll = () => {
+      if (videoRef.current && !videoRef.current.muted) {
+        videoRef.current.muted = true
+        setIsMuted(true)
+      }
+      setIsTitleVisible(true)
     }
-  }, []);
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   return (
-    <div className="relative h-screen w-full overflow-hidden pt-16" onClick={unmute}>
+    <div className="relative h-screen w-full overflow-hidden pt-16" onClick={toggleMute}>
       <video
         ref={videoRef}
         autoPlay
@@ -45,8 +52,8 @@ export function HeroSection({ videoUrl, title, heroImage }: HeroSectionProps) {
       </video>
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
       <div className="absolute inset-0 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">{title}</h1>
+        <div className={`text-center transition-opacity duration-300 ${isTitleVisible ? 'opacity-100' : 'opacity-0'}`}>
+          <h1 className={`text-4xl md:text-6xl font-bold text-${themeColor}-500 mb-4 shadow-text`}>{title}</h1>
         </div>
       </div>
     </div>
