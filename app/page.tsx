@@ -9,6 +9,10 @@ import { PurchaseSection } from '@/components/purchase-section'
 export default async function Home() {
   const game = await getDailyGame()
 
+  if (!game) {
+    return <div>No game available today. Please check back later.</div>
+  }
+
   return (
     <main className="bg-black min-h-screen">
       <NavBar themeColor={game.accentColor} />

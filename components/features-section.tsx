@@ -73,14 +73,38 @@ function FeatureCard({ feature, index }: { feature: Feature; index: number }) {
       }`}>
         <div className={`space-y-4 md:space-y-8 ${index % 2 === 0 ? 'md:order-1' : 'md:order-2'}`}>
           <h2 
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight bg-clip-text text-transparent"
-            style={{
-              backgroundImage: `linear-gradient(135deg, ${lightShade}, ${darkShade})`,
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-            }}
+            className="relative text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight"
           >
-            {feature.title}
+            <span 
+              className="relative z-10 bg-clip-text text-transparent"
+              style={{
+                backgroundImage: `linear-gradient(135deg, ${lightShade}, ${darkShade})`,
+              }}
+            >
+              {feature.title}
+            </span>
+            <span 
+              className="absolute inset-0 z-0"
+              style={{
+                textShadow: `
+                  -1px -1px 0 #000,  
+                  1px -1px 0 #000,
+                  -1px 1px 0 #000,
+                  1px 1px 0 #000,
+                  -2px -2px 0 #000,
+                  2px -2px 0 #000,
+                  -2px 2px 0 #000,
+                  2px 2px 0 #000,
+                  -3px -3px 0 #000,
+                  3px -3px 0 #000,
+                  -3px 3px 0 #000,
+                  3px 3px 0 #000
+                `,
+              }}
+              aria-hidden="true"
+            >
+              {feature.title}
+            </span>
           </h2>
           <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-300 leading-relaxed">
             {feature.description}
