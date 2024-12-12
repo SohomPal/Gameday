@@ -16,12 +16,13 @@ export interface Review {
       imageUrl: string
       accentColor: string
     }[]
+    backgroundImage: string
     heroImage: string
     expandingImage: string
     price: string
     releaseDate: string
     reviews: Review[]
-    accentColor: 'yellow' | 'red' | 'orange' | 'purple' | 'green' | 'blue'
+    accentColor: 'red'|'blue'|'green'|'yellow'|'gray'|'purple'|'pink'|'amber'|'orange'
   }
   
   

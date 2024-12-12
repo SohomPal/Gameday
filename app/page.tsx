@@ -18,7 +18,7 @@ export default async function Home() {
         heroImage={game.heroImage}
         themeColor={game.accentColor}
       />
-      <FeaturesSection features={game.features} />
+      <FeaturesSection features={game.features} backgroundImageUrl={game.backgroundImage}/>
       <ExpandingSection imageUrl={game.expandingImage} />
       <ReviewsSection reviews={game.reviews} />
       <PurchaseSection
@@ -29,4 +29,3 @@ export default async function Home() {
     </main>
   )
 }
-

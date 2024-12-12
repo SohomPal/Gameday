@@ -65,4 +65,3 @@ export function NavBar({ themeColor }: NavBarProps) {
     </nav>
   )
 }
-

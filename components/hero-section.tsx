@@ -35,6 +35,27 @@ export function HeroSection({ videoUrl, title, heroImage, themeColor }: HeroSect
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  const renderTitle = (title: string) => {
+    return title.split('').map((char, index) => {
+      if (char === ' ') {
+        return <span key={index}>&nbsp;</span>
+      }
+      return (
+        <span 
+          key={index} 
+          className="relative inline-block"
+        >
+          <span className="absolute inset-0 text-black" style={{ textShadow: '2px 2px 0 black, -2px -2px 0 black, 2px -2px 0 black, -2px 2px 0 black' }}>
+            {char}
+          </span>
+          <span className={`relative z-10 text-${themeColor}-500`}>
+            {char}
+          </span>
+        </span>
+      )
+    })
+  }
+
   return (
     <div className="relative h-screen w-full overflow-hidden pt-16" onClick={toggleMute}>
       <video
@@ -53,7 +74,9 @@ export function HeroSection({ videoUrl, title, heroImage, themeColor }: HeroSect
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
       <div className="absolute inset-0 flex items-center justify-center">
         <div className={`text-center transition-opacity duration-300 ${isTitleVisible ? 'opacity-100' : 'opacity-0'}`}>
-          <h1 className={`text-4xl md:text-6xl font-bold text-${themeColor}-500 mb-4 shadow-text`}>{title}</h1>
+          <h1 className="text-4xl md:text-6xl font-bold mb-4">
+            {renderTitle(title)}
+          </h1>
         </div>
       </div>
     </div>

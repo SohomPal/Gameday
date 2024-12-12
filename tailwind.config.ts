@@ -7,6 +7,11 @@ export default {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  safelist: [
+    {
+      pattern: /(text|bg|border|to)-(red|blue|green|yellow|gray|purple|pink|amber|orange)-(50|100|200|300|400|500|600|700|800|900)/,
+    },
+  ],
   theme: {
   	extend: {
   		colors: {
@@ -49,7 +54,7 @@ export default {
   				'3': 'hsl(var(--chart-3))',
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
-  			}
+  			},
   		},
   		borderRadius: {
   			lg: 'var(--radius)',

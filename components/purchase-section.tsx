@@ -32,4 +32,3 @@ export function PurchaseSection({ price, purchaseUrl, accentColor }: PurchaseSec
     </div>
   )
 }
-
