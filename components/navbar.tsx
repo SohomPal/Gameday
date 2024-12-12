@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 
 interface NavBarProps {
   themeColor: string
@@ -12,6 +12,7 @@ interface NavBarProps {
 export function NavBar({ themeColor }: NavBarProps) {
   const [isScrolled, setIsScrolled] = useState(false)
   const router = useRouter()
+  const pathname = usePathname()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,8 +31,11 @@ export function NavBar({ themeColor }: NavBarProps) {
   }
 
   const handleGameDayClick = () => {
-    router.push('/')
-    scrollToTop()
+    if (pathname === '/') {
+      scrollToTop()
+    } else {
+      router.push('/')
+    }
   }
 
   return (
@@ -47,13 +51,24 @@ export function NavBar({ themeColor }: NavBarProps) {
             GameDay
           </button>
           <div className="flex items-center space-x-4">
-            <Button 
-              onClick={() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' })}
-              variant="outline"
-              className="bg-white/10 text-white border-white/20 hover:bg-white/20"
-            >
-              Buy Now
-            </Button>
+            {pathname !== '/' && (
+              <Button 
+                onClick={() => router.push('/')}
+                variant="outline"
+                className="bg-white/10 text-white border-white/20 hover:bg-white/20"
+              >
+                Home
+              </Button>
+            )}
+            {pathname === '/' && (
+              <Button 
+                onClick={() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' })}
+                variant="outline"
+                className="bg-white/10 text-white border-white/20 hover:bg-white/20"
+              >
+                Buy Now
+              </Button>
+            )}
             <Link href="/about">
               <Button variant="outline" className="bg-white/10 text-white border-white/20 hover:bg-white/20">
                 About Us
@@ -65,3 +80,4 @@ export function NavBar({ themeColor }: NavBarProps) {
     </nav>
   )
 }
+
