@@ -6,7 +6,7 @@ export async function getDailyGame(): Promise<Game | null> {
   try {
     // For now, we'll hardcode the document ID. In the future, you might want to
     // implement a system to determine which game to fetch each day.
-    const gameDocRef = doc(db, 'games', 'dailyGame')
+    const gameDocRef = doc(db, 'games', '1174180')
     const gameDoc = await getDoc(gameDocRef)
 
     if (gameDoc.exists()) {
