@@ -11,13 +11,13 @@ const Groq = require("groq-sdk");
 // -----------------------------
 
 // Load environment variables
-const FIREBASE_KEYFILE = process.env.FIREBASE_APPLICATION_CREDENTIALS || 'firebasesdk-admin.json';
+const FIREBASE_KEYFILE = process.env.FIREBASE_APPLICATION_CREDENTIALS;
 const GROQ_API_KEY = process.env.GROQ_API_KEY
 
 // Initialize Firebase Admin SDK
 if (admin.apps.length === 0) {
     admin.initializeApp({
-        credential: admin.credential.cert(FIREBASE_KEYFILE),
+        credential: admin.credential.cert(JSON.parse(FIREBASE_KEYFILE)),
     });
 }
 const db = admin.firestore();
