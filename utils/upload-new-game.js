@@ -15,9 +15,11 @@ const FIREBASE_KEYFILE = process.env.FIREBASE_APPLICATION_CREDENTIALS || 'fireba
 const GROQ_API_KEY = process.env.GROQ_API_KEY
 
 // Initialize Firebase Admin SDK
-admin.initializeApp({
-    credential: admin.credential.cert(FIREBASE_KEYFILE),
-});
+if (admin.apps.length === 0) {
+    admin.initializeApp({
+        credential: admin.credential.cert(FIREBASE_KEYFILE),
+    });
+}
 const db = admin.firestore();
 
 // Initialize Puppeteer browser
@@ -314,16 +316,16 @@ export async function addNewGame(appId){
     }
 };
 
-export async function fetchTop20SteamGames() {
+export async function fetchTop100SteamGames() {
     const url = 'https://api.steampowered.com/ISteamChartsService/GetMostPlayedGames/v1/';
     try {
         const response = await axios.get(url);
         if (response.data && response.data.response && response.data.response.ranks) {
-            // Extract the top 20 app IDs
-            const top20AppIds = response.data.response.ranks
-                .slice(0, 20)
+            // Extract the top 100 app IDs
+            const top100AppIds = response.data.response.ranks
+                .slice(0, 100)
                 .map(game => game.appid.toString());
-            return top20AppIds;
+            return top100AppIds;
         } else {
             console.error('Steam API: Failed to fetch top games data');
             return [];
