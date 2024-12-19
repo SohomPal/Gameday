@@ -92,7 +92,7 @@ export default function AboutPage() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
           >
-            Whether you're a casual gamer looking for your next adventure, or a hardcore enthusiast staying on top of the latest releases, GameDay is your daily dose of gaming excitement.
+            Whether you&apos;re a casual gamer looking for your next adventure, or a hardcore enthusiast staying on top of the latest releases, GameDay is your daily dose of gaming excitement.
           </motion.p>
 
           <motion.div 
