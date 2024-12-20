@@ -5,7 +5,19 @@ import { FeaturesSection } from '@/components/features-section'
 import { ExpandingSection } from '@/components/expanding-section'
 import { ReviewsSection } from '@/components/reviews-section'
 import { PurchaseSection } from '@/components/purchase-section'
-import { Review } from '@/types/game'
+import { Game, Review } from '@/types/game'
+
+
+export const revalidate = 60 // Revalidate once per minute
+
+async function getGameData(): Promise<Game | null> {
+  try {
+    return await getDailyGame()
+  } catch (error) {
+    console.error('Failed to fetch game data:', error)
+    return null
+  }
+}
 
 function getAverageRating(reviews: Review[]): number {
   if (!reviews.length) return 0; // No reviews, return 0.
@@ -29,10 +41,17 @@ function getAverageRating(reviews: Review[]): number {
 }
 
 export default async function Home() {
-  const game = await getDailyGame()
+  const game = await getGameData()
 
   if (!game) {
-    return <div>No game available today. Please check back later.</div>
+    return (
+      <main className="bg-black min-h-screen flex items-center justify-center text-white">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold mb-4">Oops! No Game Available</h1>
+          <p className="text-xl">Please check back later for today's featured game.</p>
+        </div>
+      </main>
+    )
   }
 
   return (
@@ -44,14 +63,14 @@ export default async function Home() {
         heroImage={game.heroImage}
         themeColor={game.accentColor}
       />
-      <FeaturesSection features={game.features} backgroundImageUrl={game.backgroundImage}/>
+      <FeaturesSection features={game.features} />
       <ExpandingSection imageUrl={game.expandingImage} />
       <ReviewsSection reviews={game.reviews} />
       <PurchaseSection
-        title={game.title}
         price={game.price}
         purchaseUrl={game.purchaseUrl}
         accentColor={game.accentColor}
+        title={game.title}
         rating={getAverageRating(game.reviews)/2}
       />
     </main>
