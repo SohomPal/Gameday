@@ -48,7 +48,7 @@ export default async function Home() {
       <main className="bg-black min-h-screen flex items-center justify-center text-white">
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">Oops! No Game Available</h1>
-          <p className="text-xl">Please check back later for today's featured game.</p>
+          <p className="text-xl">Please check back later for today&apos;s featured game.</p>
         </div>
       </main>
     )
